@@ -1,0 +1,34 @@
+var http = require("http"), sys = require("sys");
+var responsecode = require("./responsecode");
+var getmethods = require("./getmethods");
+var postmethods = require("./postmethods");
+var port = 8002;
+
+var responseCodePattern = new RegExp("^/code/[0-9]+$");
+var shortBodyPattern = new RegExp("^/short/$");
+var queryParamPattern = new RegExp("^/param/\?.+$");
+var echoPostBody = new RegExp("^/post/$");
+
+http.createServer(function (req, res) {
+  var handler = null;
+  if (responseCodePattern.test(req.url)) {
+    handler = responsecode.execute;
+  } else if (shortBodyPattern.test(req.url)) {
+    handler = getmethods.shortBody;
+  } else if (queryParamPattern.test(req.url)) {
+    handler = getmethods.queryParameter;
+  } else if (echoPostBody.test(req.url)) {
+    handler = postmethods.echoBody;
+  }
+
+  if (handler == null) {
+    handler = function(req, res) {
+      res.writeHead(400, {"Content-Type": "text/plain"});
+      res.write("Unknown body");
+      res.end();
+    };
+  }
+
+  handler(req, res);
+
+}).listen(port);
