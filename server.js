@@ -5,6 +5,7 @@ var postmethods = require("./postmethods");
 var port = 8002;
 
 var responseCodePattern = new RegExp("^/code/[0-9]+$");
+var sleepPattern = new RegExp("^/sleep/[0-9]+$");
 var shortBodyPattern = new RegExp("^/short/$");
 var queryParamPattern = new RegExp("^/param/\?.+$");
 var echoPostBody = new RegExp("^/post/$");
@@ -13,6 +14,8 @@ http.createServer(function (req, res) {
   var handler = null;
   if (responseCodePattern.test(req.url)) {
     handler = responsecode.execute;
+  } else if (sleepPattern.test(req.url)) {
+    handler = getmethods.sleep;
   } else if (shortBodyPattern.test(req.url)) {
     handler = getmethods.shortBody;
   } else if (queryParamPattern.test(req.url)) {
