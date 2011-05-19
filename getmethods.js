@@ -10,6 +10,8 @@ exports.queryParameter = function(req, res) {
   var urlParts = url.parse(req.url, true);
   var pname = urlParts.query["pname"];
   var pvalue = urlParts.query[pname];
+  if (!pvalue)
+    pvalue = "error";
   res.writeHead(200, {"Content-Type": "text/plain"});
   res.write(pvalue);
   res.end();
