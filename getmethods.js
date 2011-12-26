@@ -17,6 +17,12 @@ exports.queryParameter = function(req, res) {
   res.end();
 };
 
+exports.redirect = function(req, res) {
+  var redirectUrl = req.url.split("/").slice(2).join("/");
+  res.writeHead(301, {"Location": redirectUrl} );
+  res.end();
+};
+
 exports.sleep = function(req, res) {
   var time = parseInt(req.url.split("/")[2]);
   setTimeout(function() {

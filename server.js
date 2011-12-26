@@ -8,6 +8,7 @@ var port = 8002;
 var responseCodePattern = new RegExp("^/code/[0-9]+$");
 var sleepPattern = new RegExp("^/sleep/[0-9]+$");
 var shortBodyPattern = new RegExp("^/short/$");
+var redirectPattern = new RegExp("^/redirect/.+$");
 var queryParamPattern = new RegExp("^/param/\?.+$");
 var headerPattern = new RegExp("^/header/\?.+$");
 var echoPostBody = new RegExp("^/post/$");
@@ -20,6 +21,8 @@ http.createServer(function (req, res) {
     handler = getmethods.sleep;
   } else if (shortBodyPattern.test(req.url)) {
     handler = getmethods.shortBody;
+  } else if (redirectPattern.test(req.url)) {
+    handler = getmethods.redirect;
   } else if (queryParamPattern.test(req.url)) {
     handler = getmethods.queryParameter;
   } else if (headerPattern.test(req.url)) {
