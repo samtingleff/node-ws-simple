@@ -3,7 +3,7 @@ var responsecode = require("./responsecode");
 var getmethods = require("./getmethods");
 var headermethods = require("./headermethods");
 var postmethods = require("./postmethods");
-var port = 8002;
+var port = process.env.PORT || 3000;
 
 var responseCodePattern = new RegExp("^/code/[0-9]+$");
 var sleepPattern = new RegExp("^/sleep/[0-9]+$");
