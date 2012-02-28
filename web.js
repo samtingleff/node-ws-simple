@@ -3,6 +3,7 @@ var responsecode = require("./responsecode");
 var getmethods = require("./getmethods");
 var headermethods = require("./headermethods");
 var postmethods = require("./postmethods");
+var deletemethods = require("./deletemethods");
 var port = process.env.PORT || 3000;
 
 var responseCodePattern = new RegExp("^/code/[0-9]+$");
@@ -12,6 +13,7 @@ var redirectPattern = new RegExp("^/redirect/.+$");
 var queryParamPattern = new RegExp("^/param/\?.+$");
 var headerPattern = new RegExp("^/header/\?.+$");
 var echoPostBody = new RegExp("^/post/$");
+var deleteTestPattern  = new RegExp("^/delete/$");
 
 http.createServer(function (req, res) {
   var handler = null;
@@ -29,6 +31,8 @@ http.createServer(function (req, res) {
     handler = headermethods.echoHeader;
   } else if (echoPostBody.test(req.url)) {
     handler = postmethods.echoBody;
+  } else if (deleteTestPattern.test(req.url)) {
+    handler = deletemethods.deleteTest;
   }
 
   if (handler == null) {
