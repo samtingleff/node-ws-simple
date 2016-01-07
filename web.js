@@ -14,6 +14,7 @@ var redirectPattern = new RegExp("^/redirect/.+$");
 var queryParamPattern = new RegExp("^/param/\?.+$");
 var headerPattern = new RegExp("^/header/\?.+$");
 var echoPostBody = new RegExp("^/post/$");
+var echoPostParams = new RegExp("^/post/params/$");
 var echoPutBody = new RegExp("^/put/$");
 var deleteTestPattern  = new RegExp("^/delete/$");
 
@@ -33,6 +34,8 @@ http.createServer(function (req, res) {
     handler = headermethods.echoHeader;
   } else if (echoPostBody.test(req.url)) {
     handler = postmethods.echoBody;
+  } else if (echoPostParams.test(req.url)) {
+    handler = postmethods.echoParams;
   } else if (echoPutBody.test(req.url)) {
     handler = putmethods.echoBody;
   } else if (deleteTestPattern.test(req.url)) {
