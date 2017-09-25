@@ -10,6 +10,7 @@ var port = process.env.PORT || 3000;
 var responseCodePattern = new RegExp("^/code/[0-9]+$");
 var sleepPattern = new RegExp("^/sleep/[0-9]+$");
 var shortBodyPattern = new RegExp("^/short/$");
+var longBodyPattern = new RegExp("^/long/$");
 var redirectPattern = new RegExp("^/redirect/.+$");
 var queryParamPattern = new RegExp("^/param/\?.+$");
 var headerPattern = new RegExp("^/header/\?.+$");
@@ -26,6 +27,8 @@ http.createServer(function (req, res) {
     handler = getmethods.sleep;
   } else if (shortBodyPattern.test(req.url)) {
     handler = getmethods.shortBody;
+  } else if (longBodyPattern.test(req.url)) {
+    handler = getmethods.longBody;
   } else if (redirectPattern.test(req.url)) {
     handler = getmethods.redirect;
   } else if (queryParamPattern.test(req.url)) {

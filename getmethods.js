@@ -6,6 +6,15 @@ exports.shortBody = function(req, res) {
   res.end();
 };
 
+exports.longBody = function(req, res) {
+  res.writeHead(200, {"Content-Type": "text/plain", "Content-Length": (1024*1024)} );
+  var x = Buffer.alloc(1024);
+  for (var i = 0; i < 1024; ++i) {
+    res.write(x);
+  }
+  res.end();
+};
+
 exports.queryParameter = function(req, res) {
   var urlParts = url.parse(req.url, true);
   var pname = urlParts.query["pname"];
