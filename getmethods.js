@@ -1,4 +1,4 @@
-var url = require("url"), sys = require("sys");
+var url = require("url"), sys = require("sys"), auth = require("./basicauth");
 
 exports.shortBody = function(req, res) {
   res.writeHead(200, {"Content-Type": "text/plain"} );
@@ -12,6 +12,17 @@ exports.longBody = function(req, res) {
   for (var i = 0; i < 1024; ++i) {
     res.write(x);
   }
+  res.end();
+};
+
+exports.credentials = function(req, res) {
+  var user = auth(req);
+  var responseStatus = 403;
+  if (user && user.name === 'foo' && user.pass === 'bar') {
+    responseStatus = 200;
+  }
+  res.writeHead(responseStatus, {"Content-Type": "text/plain"});
+  res.write("ok");
   res.end();
 };
 
